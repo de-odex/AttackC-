@@ -74,6 +74,7 @@ int main(){
 				cout << "You're at level " << lvl;
 				cout << "You have "<< xp << "/" << xplevel << " xp";
 				percent = xp/xplevel;
+				/*
 				percent = round(percent, 3)   //what the fuck do i do now
 				percent = percent*100
 				if percent > 90:
