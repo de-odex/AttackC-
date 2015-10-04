@@ -7,16 +7,15 @@
 #include <math.h>
 
 using namespace std;
-wchar_t version;
-version = cpp0.1
 int main(){
     srand (time(NULL));
     cout << "Attack" << endl;
 	cout << "Instructions: fight the enemy until you or he dies." << endl;
 	cout << "SAVING IS BROKEN, SORRY! :(" << endl;
-	cout << "Version " << version << endl;
+	cout << "Version 0.1" << endl;
 	bool done;
-	int lvl,health,enemy,dollas,med,nrg,attack1,attack2,attack3,attack4,ai_attack1,ai_attack2,ai_attack3,ai_attack4,ai_nrg,ai_med,turn,bank,kills,xp,xplevel,random_number,a,healthmod,percent;
+	int lvl,health,enemy,dollas,med,nrg,attack1,attack2,attack3,attack4,ai_attack1,ai_attack2,ai_attack3,ai_attack4,ai_nrg,ai_med,turn,bank,kills,xp,xplevel,random_number,a,healthmod;
+	float percent;
 	done = false;
 	lvl=0;
 	health=100;
@@ -39,13 +38,14 @@ int main(){
 	kills=0;
 	xp=0;
 	xplevel=50;
-	healthmod=25*lvl
-	health+=healthmod
+	//load
+	healthmod=25*lvl;
+	health+=healthmod;
 	if (health > 100+healthmod){
 		health=100+healthmod;
 		enemy=100;
 	}
-	if (attack1 > 10) || (attack2 > 30) || (attack3 > 30) || (attack4 > 5)
+	if ((attack1 > 10) || (attack2 > 30) || (attack3 > 30) || (attack4 > 5)){
         attack1=10;
 		attack2=30;
 		attack3=30;
@@ -56,11 +56,11 @@ int main(){
 		ai_attack4=5;
     }
 	while (done == false){
-		while (health > 0) && (enemy > 0){
+		while ((health > 0) && (enemy > 0)){
 			while (turn == 1){
 
 				random_number = rand() % 100 + 1;
-				if xp >= xplevel{
+				if (xp >= xplevel){
 					lvl+=1;
 					xp-=xplevel;
 					a=1;
@@ -69,66 +69,55 @@ int main(){
 					xplevel=xplevel+35+(5*lvl);
 				}
 				cout << "Hi! Stats:" << endl;
-				cout << "Your health is: " << health;
-				cout << "The enemy's health is: " << enemy;
-				cout << "You're at level " << lvl;
-				cout << "You have "<< xp << "/" << xplevel << " xp";
+				cout << "Your health is: " << health << endl;
+				cout << "The enemy's health is: " << enemy << endl;
+				cout << "You're at level " << lvl << endl;
+				cout << "You have "<< xp << "/" << xplevel << " xp" << endl;
 				percent = xp/xplevel;
-				/*
-				percent = round(percent, 3)   //what the fuck do i do now
-				percent = percent*100
-				if percent > 90:
-					print("<---------|>")
-				elif percent > 80 and percent <= 90:
-					print("<--------|->")
-				elif percent > 70 and percent <= 80:
-					print("<-------|-->")
-				elif percent > 60 and percent <= 70:
-					print("<------|--->")
-				elif percent > 50 and percent <= 60:
-					print("<-----|---->")
-				elif percent > 40 and percent <= 50:
-					print("<----|----->")
-				elif percent > 30 and percent <= 40:
-					print("<---|------>")
-				elif percent > 20 and percent <= 30:
-					print("<--|------->")
-				elif percent > 10 and percent <= 20:
-					print("<-|-------->")
-				elif percent > 0 and percent <= 10:
-					print("<|--------->")
-				print("You have {:} dollars".format(dollas))
-				print("You have {:} dollars in your bank".format(bank))
-				print("You have {:2} medpacks".format(med))
-				print("You have {:2} NRG drinks".format(nrg))
-				print("You have {:2} energy for attack 1".format(attack1))
-				print("You have {:2} energy for attack 2".format(attack2))
-				print("You have {:2} energy for attack 3".format(attack3))
-				print("You have {:2} energy for attack 4".format(attack4))
-				print("You killed {:} people".format(kills))
-				save1(health)
-				save2(enemy)
-				save2(dollas)
-				save2(med)
-				save2(nrg)
-				save2(attack1)
-				save2(attack2)
-				save2(attack3)
-				save2(attack4)
-				save2(ai_attack1)
-				save2(ai_attack2)
-				save2(ai_attack3)
-				save2(ai_attack4)
-				save2(ai_nrg)
-				save2(ai_med)
-				save2(turn)
-				save2(bank)
-				save2(kills)
-				save2(xp)
-				save2(lvl)
-				save2(xplevel)
-				print("<>")
-				input_number = input("Attack, use items, buy, or exit (1, 2, 3, or 4 respectively): ")
+				percent = static_cast<int>(percent*100+0.5) / 100.0;
+				percent = percent*100;
+				if (percent > 90){
+					cout << "<---------|>" << endl;
+				}
+				else if ((percent > 80) && (percent <= 90)){
+					cout << "<--------|->" << endl;
+				}
+				else if ((percent > 70) && (percent <= 80)){
+					cout << "<-------|-->" << endl;
+				}
+				else if ((percent > 60) && (percent <= 70)){
+					cout << "<------|--->" << endl;
+				}
+				else if ((percent > 50) && (percent <= 60)){
+					cout << "<-----|---->" << endl;
+				}
+				else if ((percent > 40) && (percent <= 50)){
+					cout << "<----|----->" << endl;
+				}
+				else if ((percent > 30) && (percent <= 40)){
+					cout << "<---|------>" << endl;
+				}
+				else if ((percent > 20) && (percent <= 30)){
+					cout << "<--|------->" << endl;
+				}
+				else if ((percent > 10) && (percent <= 20)){
+					cout << "<-|-------->" << endl;
+				}
+				else if ((percent > 0) && (percent <= 10)){
+                    cout << "<|--------->" << endl;
+				}
+				cout << "You have " << dollas << " dollars" << endl;
+				cout << "You have " << bank << " dollars in your bank" << endl;
+				cout << "You have " << med << " medpacks" << endl;
+				cout << "You have " << nrg << " NRG drinks" << endl;
+				cout << "You have " << attack1 << " energy for attack 1" << endl;
+				cout << "You have " << attack2 << " energy for attack 2" << endl;
+				cout << "You have " << attack3 << " energy for attack 3" << endl;
+				cout << "You have " << attack4 << " energy for attack 4" << endl;
+				cout << "You killed " << kills << " people" << endl;
+				//save
+				cout << "Attack, use items, buy, or exit (1, 2, 3, or 4 respectively): ";
+				cin >> input_number //stop here :)
 				try:
 					input_number = int(input_number)
 				except ValueError:
