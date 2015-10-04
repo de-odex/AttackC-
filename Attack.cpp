@@ -1,4 +1,4 @@
-//just a test program that calculates some stoof
+//Attack in C++
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
