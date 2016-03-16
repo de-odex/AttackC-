@@ -17,7 +17,7 @@ int main(){
 	cout << "Version 0.1" << endl;
 	bool done;
 	int lvl,health,enemy,dollas,med,nrg,attack1,attack2,attack3,attack4,ai_attack1,ai_attack2,ai_attack3,ai_attack4,ai_nrg,ai_med,turn,bank,kills,xp,xplevel,healthmod;
-	int attack_number,hhit_attack,nrm_attack,spcl_attack;
+	int attack_number,hhit_attack,nrm_attack,spcl_attack,item_number,buy_number,nrg_price,nrg_num,med_price,med_num,heal_price;
 	float percent;
 	int input1;
 	done = false;
@@ -130,14 +130,14 @@ int main(){
 					else if ((attack_number == 1) && (attack1 >= 1))
 						// clr()
 						if ((random_number < 80) && (random_number >= 1)){
-							cout << "You hit him with your backup attack!";
+							cout << "You hit him with your backup attack!" << endl;
 							enemy = enemy - 5;
-							cout << "It caused 5 damage!";
+							cout << "It caused 5 damage!" << endl;
 							attack1-=1;
 							turn = 0;
 						}
 						else if (random_number >= 80){
-							cout << "You missed!";
+							cout << "You missed!" << endl;
 							attack1-=1;
 							turn = 0;
 						}
@@ -145,14 +145,14 @@ int main(){
 						// clr()
 						if ((random_number < 40) && (random_number >= 1)){
 							hhit_attack = rand() % 16 + 35; //random.randint(35, 50)
-							cout << "You hit him with your hard-hitting attack!";
+							cout << "You hit him with your hard-hitting attack!" << endl;
 							enemy = enemy - hhit_attack;
-							cout << "It caused " << hhit_attack << " damage!";
+							cout << "It caused " << hhit_attack << " damage!" << endl;
 							attack2-=1;
 							turn = 0;
                         }
 						else if (random_number >= 40){
-							cout << "You missed!";
+							cout << "You missed!" << endl;
 							attack2-=1;
 							turn = 0;
 						}
@@ -161,14 +161,14 @@ int main(){
 						// clr()
 						if ((random_number < 60) && (random_number >= 1)){
 							nrm_attack = rand() % 11 + 10; //random.randint(10, 20)
-							cout << "You hit him with your normal attack!";
+							cout << "You hit him with your normal attack!" << endl;
 							enemy = enemy - nrm_attack;
-							cout << "It caused " << nrm_attack << " damage!";
+							cout << "It caused " << nrm_attack << " damage!" << endl;
 							attack3-=1;
 							turn = 0;
 						}
 						else if (random_number >= 60){
-							cout << "You missed!";
+							cout << "You missed!" << endl;
 							attack3-=1;
 							turn = 0;
                         }
@@ -177,128 +177,130 @@ int main(){
                         // clr()
 						if ((random_number < 20) && (random_number >= 1)){
                             spcl_attack = rand() % 16 + 60; //random.randint(60, 75)
-							cout << "You hit him with your special attack!";
+							cout << "You hit him with your special attack!" << endl;
 							enemy = enemy - spcl_attack;
-							cout << "It caused " << spcl_attack << " damage!";
+							cout << "It caused " << spcl_attack << " damage!" << endl;
 							attack4-=1;
 							turn = 0;
 						}
-						else if (random_number >= 2){
-                            cout << "You missed!";
+						else if (random_number >= 20){
+                            cout << "You missed!\n" << endl;
 							attack4-=1;
 							turn = 0;
 						}
                     }
 				}
-				else if input1 == 2:
+				else if (input1 == 50){
 					// clr()
-					cout << "What item will you use? (any other number to go back)")
-					cout << "1. NRG drink (energy)")
-					cout << "2. Medpack")
-					item_number = input(" > ")
-					try:
-						item_number = int(item_number)
-					except ValueError:
+					cout << "What item will you use? (any other number to go back)" << endl;
+					cout << "1. NRG drink (energy)" << endl;
+					cout << "2. Medpack" << endl;
+                    cout << " > " << endl;
+                    item_number = getch();
+
+					if (item_number == 49){
 						// clr()
-						cout << "Number please!")
-					if item_number == 1:
+						cout << "You tried to drink an NRG drink!" << endl;
+						if ((random_number <= 60) && (random_number >= 1) && (nrg > 0)){
+							cout << "You restored your energy!" << endl;
+							attack1 = 10;
+							attack2 = 30;
+							attack3 = 30;
+							attack4 = 5;
+							nrg -= 1;
+							turn = 0;
+						}
+						else if ((random_number > 60) || (nrg <= 0) || (attack1 == 10) || (attack2 == 30) || (attack3 == 30) || (attack4 == 10)){
+							cout << "You failed to drink an NRG drink!" << endl;
+							turn = 0;
+						}
+					}
+					else if (item_number == 50){
 						// clr()
-						cout << "You tried to drink an NRG drink!")
-						if random_number <= 60 && random_number >= 1 && nrg > 0:
-							cout << "You restored your energy!")
-							attack1 = 10
-							attack2 = 30
-							attack3 = 30
-							attack4 = 5
-							nrg -= 1
-							turn = 0
-						else if random_number > 60 || nrg <= 0 || attack1 == 10 || attack2 == 30 || attack3 == 30 || attack4 == 10:
-							cout << "You failed to drink an NRG drink!")
-							turn = 0
-					else if item_number == 2:
-						// clr()
-						cout << "You tried to heal!")
-						if random_number <= 80 && random_number >= 1 && health < 100+healthmod && med > 0:
-							cout << "You healed up!")
-							health += 25
-							med -= 1
-							cout << "You have " + str(med) + " more medpacks")
-							turn = 0
-						else if random_number > 80 || med <= 0 || health >= 100+healthmod:
-							cout << "You failed to heal!")
-							cout << "You have " + str(med) + " more medpacks")
-							turn = 0
-				else if input1 == 3:
+						cout << "You tried to heal!" << endl;
+						if ((random_number <= 80) && (random_number >= 1) && (health < 100+healthmod) && (med > 0)){
+							cout << "You healed up!" << endl;
+							health += 25;
+							med -= 1;
+							cout << "You have " << med << " more medpacks" << endl;
+							turn = 0;
+                        }
+						else if ((random_number > 80) || (med <= 0) || (health >= 100+healthmod)){
+							cout << "You failed to heal!" << endl;
+							cout << "You have " + med << " more medpacks" << endl;
+							turn = 0;
+						}
+					}
+				}
+				else if (input1 == 51){
 					// clr()
-					cout << "Buy what? (any other number to go back)")
-					cout << "1. NRG drink (energy): 50 dollars")
-					cout << "2. Medpack: 50 dollars")
-					cout << "3. Full heal: 250 dollars")
-					buy_number = input(" > ")
-					try:
-						buy_number = int(buy_number)
-					except ValueError:
-						// clr()
-						cout << "Number please!")
-					if buy_number == 1:
-						nrg_price = 50
-						nrg_num = input("How many?: ")
-						try:
-							nrg_num = int(nrg_num)
-						except ValueError:
-							// clr()
-							cout << "Number please!")
-						if nrg_price * nrg_num > dollas:
-							cout << "Not enough money!")
-						else if nrg_price * nrg_num <= dollas:
-							dollas = dollas - (nrg_price * nrg_num)
-							nrg = nrg + nrg_num
-					else if buy_number == 2:
-						med_price = 50
-						med_num = input("How many?: ")
-						try:
-							med_num = int(med_num)
-						except ValueError:
-							// clr()
-							cout << "Number please!")
-						if med_price * med_num > dollas:
-							cout << "Not enough money!")
-						else if med_price * med_num <= dollas:
-							dollas = dollas - (med_price * med_num)
-							med = med + med_num
-					else if buy_number == 3:
-						heal_price = 250
-						if heal_price > dollas:
-							cout << "Not enough money!"
-						else if heal_price <= dollas:
-							dollas = dollas - heal_price
-							health = 100+healthmod
-							cout << "You used a full heal!")
-						turn = 0
-				else if input1 == 4:
-					// clr()
-					cout << "Bye!")
-					enter()
-					sys.exit()
+					cout << "Buy what? (any other number to go back)" << endl;
+					cout << "1. NRG drink (energy): 50 dollars" << endl;
+					cout << "2. Medpack: 50 dollars" << endl;
+					cout << "3. Full heal: 250 dollars" << endl;
+					buy_number = getch();
+					if (buy_number == 49){
+						nrg_price = 50;
+						cout << "How many?: " << endl;
+						cin >> nrg_num;
+						if (nrg_price * nrg_num > dollas)
+							cout << "Not enough money!" << endl;
+						else if (nrg_price * nrg_num <= dollas){
+							dollas = dollas - (nrg_price * nrg_num);
+							nrg = nrg + nrg_num;
+						}
+                    }
+					else if (buy_number == 50){
+						med_price = 50;
+						cout << "How many?: " << endl;
+						cin >> med_num;
+						if (med_price * med_num > dollas)
+							cout << "Not enough money" << endl;
+						else if (med_price * med_num <= dollas){
+							dollas = dollas - (med_price * med_num);
+							med = med + med_num;
+						}
+					}
+					else if (buy_number == 51){
+						heal_price = 250;
+						if (heal_price > dollas)
+							cout << "Not enough money!" << endl;
+						else if (heal_price <= dollas){
+							dollas = dollas - heal_price;
+							health = 100+healthmod;
+							cout << "You used a full heal!" << endl;
+						}
+						turn = 0;
+                    }
+				else if (input1 == 52){
+                    // clr()
+					cout << "Bye!" << endl;
+					system("pause");
+					exit(0);
+				}
             }
 			while (turn == 0){
 				ai_number = random.randint(1, 2)
 				ai_attack = random.randint(1, 4)
 				ai_item = random.randint(1, 2)
 				event = random.randint(1, 100)
-				if ai_number == 1:
-					if ai_attack == 1 && ai_attack1 < 1:
-						a=1
-						turn = 0
-					else if ai_attack == 2 && ai_attack2 < 1:
-						a=1
-						turn = 0
-					else if ai_attack == 3 && ai_attack3 < 1:
-						a=1
-						turn = 0
-					else if ai_attack == 4 && ai_attack4 < 1 && enemy > 15:
-						a=1
-						turn = 0
+				if (ai_number == 1){
+                    if ((ai_attack == 1) && (ai_attack1 < 1)){
+						Sleep(10);
+						turn = 0;
+                    }
+					else if ((ai_attack == 2) && (ai_attack2 < 1)){
+						Sleep(10);
+						turn = 0;
+					}
+					else if ((ai_attack == 3) && (ai_attack3 < 1)){
+						Sleep(10);
+						turn = 0;
+                    }
+					else if ((ai_attack == 4) && (ai_attack4 < 1) && (enemy > 15)){
+						Sleep(10);
+						turn = 0;
+					}
 					else if ai_attack == 1 && ai_attack1 >= 1 && ai_attack2 == 0 && ai_attack3 == 0 && ai_attack4 == 0:
 						if event < 80 && event >= 1:
 							cout << "He hit you with his backup attack!")
@@ -346,42 +348,44 @@ int main(){
 							cout << "He missed!")
 							ai_attack4-=1
 							turn = 1
+				}
 				else if ai_number == 2 && enemy <= 15 && ai_med > 0 && ai_item == 1 && enemy <= 15:
 					ai_med -= 1
 					enemy += 25
 					turn = 1
 				else if ai_number == 2 && ai_nrg > 0 && ai_item == 2 && attack1 == 0 && attack2 == 0 && attack3 == 0 && attack4 == 0:
-					ai_nrg -= 1
-					ai_attack1 = 10
-					ai_attack2 = 30
-					ai_attack3 = 30
-					ai_attack4 = 5
-					turn = 1
+					ai_nrg -= 1;
+					ai_attack1 = 10;
+					ai_attack2 = 30;
+					ai_attack3 = 30;
+					ai_attack4 = 5;
+					turn = 1;
 				else if ai_number == 2:
-					a=1
-					turn = 0
+                    Sleep(10);
+					turn = 0;
 			}
         }
-		if health <= 0 && bank >= -500:
-			cout << "You blacked out!")
-			cout << "The hospital healed you back up!")
-			health=100
-			enemy=100
-			dollas=0
-			med=5
-			nrg=3
-			attack1=10
-			attack2=30
-			attack3=30
-			attack4=5
-			ai_attack1=10
-			ai_attack2=30
-			ai_attack3=30
-			ai_attack4=5
-			ai_nrg=3
-			ai_med=5
-			turn=1
-			bank = bank - 250
+		if health <= 0 && bank >= -500{
+			cout << "You blacked out!" << endl;
+			cout << "The hospital healed you back up!" << endl;
+			health=100;
+			enemy=100;
+			dollas=0;
+			med=5;
+			nrg=3;
+			attack1=10;
+			attack2=30;
+			attack3=30;
+			attack4=5;
+			ai_attack1=10;
+			ai_attack2=30;
+			ai_attack3=30;
+			ai_attack4=5;
+			ai_nrg=3;
+			ai_med=5;
+			turn=1;
+			bank = bank - 250;
+			/*
 			save1(health)
 			save2(enemy)
 			save2(dollas)
@@ -403,7 +407,9 @@ int main(){
 			save2(xp)
 			save2(lvl)
 			save2(xplevel)
-			health=health+healthmod
+			*/
+			health=health+healthmod;
+		}
 		else if lvl >= 50:
 			cout << "You win!")
 			cout << "Game over!")
