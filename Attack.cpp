@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <Windows.h>
+#include <conio.h>
 
 using namespace std;
 int main(){
@@ -14,9 +16,10 @@ int main(){
 	cout << "SAVING IS BROKEN, SORRY! :(" << endl;
 	cout << "Version 0.1" << endl;
 	bool done;
-	int lvl,health,enemy,dollas,med,nrg,attack1,attack2,attack3,attack4,ai_attack1,ai_attack2,ai_attack3,ai_attack4,ai_nrg,ai_med,turn,bank,kills,xp,xplevel,random_number,a,healthmod;
+	int lvl,health,enemy,dollas,med,nrg,attack1,attack2,attack3,attack4,ai_attack1,ai_attack2,ai_attack3,ai_attack4,ai_nrg,ai_med,turn,bank,kills,xp,xplevel,healthmod;
+	int attack_number,hhit_attack,nrm_attack,spcl_attack;
 	float percent;
-	char* input1;
+	int input1;
 	done = false;
 	lvl=0;
 	health=100;
@@ -59,14 +62,12 @@ int main(){
 	while (done == false){
 		while ((health > 0) && (enemy > 0)){
 			while (turn == 1){
-
+                int random_number;
 				random_number = rand() % 100 + 1;
 				if (xp >= xplevel){
 					lvl+=1;
 					xp-=xplevel;
-					a=1;
-					a=1;
-					a=1;
+					Sleep(10);
 					xplevel=xplevel+35+(5*lvl);
 				}
 				cout << "Hi! Stats:" << endl;
@@ -75,38 +76,28 @@ int main(){
 				cout << "You're at level " << lvl << endl;
 				cout << "You have "<< xp << "/" << xplevel << " xp" << endl;
 				percent = xp/xplevel;
-				percent = static_cast<int>(percent*100+0.5) / 100.0;
+				percent = /*static_cast<int>*/(percent*100.0+0.5) / 100.0;
 				percent = percent*100;
-				if (percent > 90){
+				if (percent > 90)
 					cout << "<---------|>" << endl;
-				}
-				else if ((percent > 80) && (percent <= 90)){
+				else if ((percent > 80) && (percent <= 90))
 					cout << "<--------|->" << endl;
-				}
-				else if ((percent > 70) && (percent <= 80)){
+				else if ((percent > 70) && (percent <= 80))
 					cout << "<-------|-->" << endl;
-				}
-				else if ((percent > 60) && (percent <= 70)){
+				else if ((percent > 60) && (percent <= 70))
 					cout << "<------|--->" << endl;
-				}
-				else if ((percent > 50) && (percent <= 60)){
+				else if ((percent > 50) && (percent <= 60))
 					cout << "<-----|---->" << endl;
-				}
-				else if ((percent > 40) && (percent <= 50)){
+				else if ((percent > 40) && (percent <= 50))
 					cout << "<----|----->" << endl;
-				}
-				else if ((percent > 30) && (percent <= 40)){
+				else if ((percent > 30) && (percent <= 40))
 					cout << "<---|------>" << endl;
-				}
-				else if ((percent > 20) && (percent <= 30)){
+				else if ((percent > 20) && (percent <= 30))
 					cout << "<--|------->" << endl;
-				}
-				else if ((percent > 10) && (percent <= 20)){
+				else if ((percent > 10) && (percent <= 20))
 					cout << "<-|-------->" << endl;
-				}
-				else if ((percent > 0) && (percent <= 10)){
+				else if ((percent > 0) && (percent <= 10))
                     cout << "<|--------->" << endl;
-				}
 				cout << "You have " << dollas << " dollars" << endl;
 				cout << "You have " << bank << " dollars in your bank" << endl;
 				cout << "You have " << med << " medpacks" << endl;
@@ -117,76 +108,87 @@ int main(){
 				cout << "You have " << attack4 << " energy for attack 4" << endl;
 				cout << "You killed " << kills << " people" << endl;
 				//save
-				cout << "(attack), use (items), (buy), or (exit): " << endl;
-				cin >> input1;
-				if (input1 == "attack"){
+				cout << "1. attack, 2. use items, 3. buy, or 4. exit: " << endl;
+				input1 = getch();
+				if (input1 == 49){
 					// clr()
+
 					cout << "What attack would you want to use? (any other number to go back) " << endl;
 					cout << "Backup -- Uses: " << attack1 << endl;
-					cout << "Hard-hitting -- Uses: " << attack2 << endl; //stop here lol
+					cout << "Hard-hitting -- Uses: " << attack2 << endl;
                     cout << "Normal -- Uses: " << attack3 << endl;
 					cout << "Special -- Uses: " << attack4 << endl;
 					cin >> attack_number;
-					if ((attack_number == 1) && (attack1 < 1)){
+					if ((attack_number == 1) && (attack1 < 1))
 						cout << "No more uses!";
+					else if ((attack_number == 2) && (attack2 < 1))
+						cout << "No more uses!";
+					else if ((attack_number == 3) && (attack3 < 1))
+						cout << "No more uses!";
+					else if ((attack_number == 4) && (attack4 < 1))
+						cout << "No more uses!";
+					else if ((attack_number == 1) && (attack1 >= 1))
+						// clr()
+						if ((random_number < 80) && (random_number >= 1)){
+							cout << "You hit him with your backup attack!";
+							enemy = enemy - 5;
+							cout << "It caused 5 damage!";
+							attack1-=1;
+							turn = 0;
+						}
+						else if (random_number >= 80){
+							cout << "You missed!";
+							attack1-=1;
+							turn = 0;
+						}
+					else if ((attack_number == 2) && (attack2 >= 1)){
+						// clr()
+						if ((random_number < 40) && (random_number >= 1)){
+							hhit_attack = rand() % 16 + 35; //random.randint(35, 50)
+							cout << "You hit him with your hard-hitting attack!";
+							enemy = enemy - hhit_attack;
+							cout << "It caused " << hhit_attack << " damage!";
+							attack2-=1;
+							turn = 0;
+                        }
+						else if (random_number >= 40){
+							cout << "You missed!";
+							attack2-=1;
+							turn = 0;
+						}
 					}
-					else if (attack_number == 2) && attack2 < 1:
-						cout << "No more uses!";
-					else if attack_number == 3 && attack3 < 1:
-						cout << "No more uses!")
-					else if attack_number == 4 && attack4 < 1:
-						cout << "No more uses!")
-					else if attack_number == 1 && attack1 >= 1:
+					else if ((attack_number == 3) && (attack3 >= 1)){
 						// clr()
-						if random_number < 80 && random_number >= 1:
-							cout << "You hit him with your backup attack!")
-							enemy = enemy - 5
-							cout << "It caused 5 damage!")
-							attack1-=1
-							turn = 0
-						else if random_number >= 80:
-							cout << "You missed!")
-							attack1-=1
-							turn = 0
-					else if attack_number == 2 && attack2 >= 1:
-						// clr()
-						if random_number < 40 && random_number >= 1:
-							hhit_attack = random.randint(35, 50)
-							cout << "You hit him with your hard-hitting attack!")
-							enemy = enemy - hhit_attack
-							cout << "It caused " + str(hhit_attack) + " damage!")
-							attack2-=1
-							turn = 0
-						else if random_number >= 40:
-							cout << "You missed!")
-							attack2-=1
-							turn = 0
-					else if attack_number == 3 && attack3 >= 1:
-						// clr()
-						if random_number < 60 && random_number >= 1:
-							nrm_attack = random.randint(10, 20)
-							cout << "You hit him with your normal attack!")
-							enemy = enemy - nrm_attack
-							cout << "It caused " + str(nrm_attack) + " damage!")
-							attack3-=1
-							turn = 0
-						else if random_number >= 60:
-							cout << "You missed!")
-							attack3-=1
-							turn = 0
-					else if attack_number == 4 && attack4 >= 1:
-						// clr()
-						if random_number < 20 && random_number >= 1:
-							spcl_attack = random.randint(60, 75)
-							cout << "You hit him with your special attack!")
-							enemy = enemy - spcl_attack
-							cout << "It caused " + str(spcl_attack) + " damage!")
-							attack4-=1
-							turn = 0
-						else if random_number >= 20:
-							cout << "You missed!")
-							attack4-=1
-							turn = 0
+						if ((random_number < 60) && (random_number >= 1)){
+							nrm_attack = rand() % 11 + 10; //random.randint(10, 20)
+							cout << "You hit him with your normal attack!";
+							enemy = enemy - nrm_attack;
+							cout << "It caused " << nrm_attack << " damage!";
+							attack3-=1;
+							turn = 0;
+						}
+						else if (random_number >= 60){
+							cout << "You missed!";
+							attack3-=1;
+							turn = 0;
+                        }
+					}
+                    else if ((attack_number == 4) && (attack4 >= 1)){
+                        // clr()
+						if ((random_number < 20) && (random_number >= 1)){
+                            spcl_attack = rand() % 16 + 60; //random.randint(60, 75)
+							cout << "You hit him with your special attack!";
+							enemy = enemy - spcl_attack;
+							cout << "It caused " << spcl_attack << " damage!";
+							attack4-=1;
+							turn = 0;
+						}
+						else if (random_number >= 2){
+                            cout << "You missed!";
+							attack4-=1;
+							turn = 0;
+						}
+                    }
 				}
 				else if input1 == 2:
 					// clr()
